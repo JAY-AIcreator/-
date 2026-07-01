@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>천재현 · Copywriter · AI Video Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red: #CC3A24;
+  --cream: #F0EDE6;
+  --cream-dim: #B8B4AC;
+  --dark: #0A0A0A;
+  --dark2: #141414;
+  --dark3: #1C1C1C;
+  --border: rgba(255,255,255,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--cream);
+  font-family: 'Pretendard', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+#hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--dark);
+  overflow: hidden;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(204,58,36,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-line {
+  font-family: 'Pretendard', sans-serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  text-align: center;
+  line-height: 1.3;
+  min-height: 1.3em;
+}
+
+.hero-line .cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--red);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hero-divider {
+  width: 1px;
+  height: 0;
+  background: rgba(240,237,230,0.2);
+  margin: 36px auto;
+  transition: height 0.8s ease;
+}
+.hero-divider.visible { height: 48px; }
+
+.hero-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.hero-name.visible { opacity: 1; transform: translateY(0); }
+
+.hero-role {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--red);
+  text-align: center;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s;
+}
+.hero-role.visible { opacity: 1; }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.8s ease 1s;
+  cursor: pointer;
+}
+.hero-scroll.visible { opacity: 1; }
+.hero-scroll span {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--cream-dim);
+  text-transform: uppercase;
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--cream-dim), transparent);
+  animation: scrollDown 1.8s ease-in-out infinite;
+}
+@keyframes scrollDown {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: normal;
+  transition: background 0.3s ease;
+}
+nav.scrolled {
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--cream);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--cream-dim);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--cream); }
+
+/* ── SECTION BASE ── */
+section {
+  padding: 120px 52px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-tag {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-tag::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 80px;
+}
+
+/* ── ABOUT ── */
+#about {
+  border-top: 1px solid var(--border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-headline {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+.about-headline em {
+  font-style: normal;
+  color: var(--red);
+}
+
+.about-desc {
+  font-size: 15px;
+  line-height: 2.0;
+  color: var(--cream-dim);
+}
+.about-desc strong { color: var(--cream); font-weight: 700; }
+
+.about-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.meta-block {}
+.meta-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.meta-item {
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 2.2;
+  padding-left: 12px;
+  position: relative;
+}
+.meta-item::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: rgba(255,255,255,0.2);
+  font-size: 10px;
+}
+.meta-item strong { color: var(--cream); font-weight: 600; }
+
+/* ── CASES ── */
+#cases {
+  border-top: 1px solid var(--border);
+  padding-bottom: 0;
+}
+
+.case-block {
+  margin-bottom: 120px;
+  padding-bottom: 120px;
+  border-bottom: 1px solid var(--border);
+}
+.case-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* 이미지 배경 케이스 */
+.case-hero {
+  width: 100%;
+  aspect-ratio: 16/7;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 52px;
+}
+.case-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.45);
+}
+.case-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(10,10,10,0.7) 0%, transparent 60%);
+}
+.case-hero-text {
+  position: absolute;
+  bottom: 40px;
+  left: 48px;
+}
+.case-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.case-title {
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.case-subtitle {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.04em;
+}
+
+/* 다크 단색 케이스 헤더 */
+.case-header-dark {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  padding: 48px 52px;
+  margin-bottom: 52px;
+  position: relative;
+  overflow: hidden;
+}
+.case-header-dark::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--red);
+}
+
+/* 케이스 바디 */
+.case-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.case-copy-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.case-copy-text {
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--cream-dim);
+  white-space: pre-line;
+}
+.case-copy-text strong {
+  color: var(--cream);
+  font-weight: 700;
+}
+.case-copy-key {
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: var(--cream);
+  margin: 20px 0;
+  display: block;
+}
+.case-copy-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 20px;
+}
+
+.video-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 24px;
+  display: inline-flex;
+}
+.video-btn:hover {
+  background: var(--red);
+  color: #fff;
+}
+
+/* process */
+.process-section {
+  margin-top: 52px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+.process-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--border);
+}
+.process-col {
+  padding: 28px 28px;
+  border-right: 1px solid var(--border);
+}
+.process-col:last-child { border-right: none; }
+.process-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.14em;
+  margin-bottom: 12px;
+}
+.process-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--cream);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.process-body {
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 1.9;
+}
+.process-body strong { color: var(--cream); font-weight: 700; }
+
+.process-insight {
+  margin-top: 1px;
+  padding: 20px 28px;
+  background: rgba(204,58,36,0.06);
+  border: 1px solid rgba(204,58,36,0.2);
+  border-top: none;
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 1.8;
+  font-style: italic;
+}
+.process-insight strong { color: var(--cream); }
+.process-direction {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: transparent;
+  border-left: 2px solid rgba(255,255,255,0.15);
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+.process-direction strong { color: rgba(255,255,255,0.65); }
+
+/* 스토리보드 그리드 */
+.frames-section {
+  margin-top: 40px;
+}
+/* 실제 이미지 그리드 */
+.result-section {
+  margin-top: 40px;
+}
+.result-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+.result-grid img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s;
+}
+.result-grid img:hover { opacity: 0.85; }
+
+.frames-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.frames-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+.frame {
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px 16px;
+  background: var(--dark3);
+}
+.frame img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.frame::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 65%;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  pointer-events: none;
+  z-index: 1;
+}
+.frame-scene, .frame-copy { position: relative; z-index: 2; }
+.frame-scene {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.frame-copy {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.5;
+}
+
+/* 프레임 배경색 */
+.f-gamff-1 { background: #080808; }
+.f-gamff-2 { background: linear-gradient(160deg, #111 0%, #1c1c1c 100%); }
+.f-gamff-3 { background: linear-gradient(160deg, #1e1208 0%, #362010 100%); }
+.f-gamff-4 { background: linear-gradient(160deg, #2a1a08 0%, #4a2e12 100%); }
+.f-gamff-5 { background: linear-gradient(160deg, #3a2408 0%, #6a4010 100%); }
+.f-gamff-6 { background: linear-gradient(160deg, #6a4800 0%, #a86e00 100%); }
+
+.f-anua-1 { background: linear-gradient(160deg, #0a1828 0%, #1a2c3c 100%); }
+.f-anua-2 { background: linear-gradient(160deg, #081820 0%, #162838 100%); }
+.f-anua-3 { background: linear-gradient(160deg, #0e2028 0%, #1c3040 100%); }
+.f-anua-4 { background: linear-gradient(160deg, #0a1c28 0%, #183040 100%); }
+.f-anua-5 { background: linear-gradient(160deg, #081828 0%, #142838 100%); }
+.f-anua-6 { background: linear-gradient(160deg, #0a2030 0%, #183848 100%); }
+
+.f-toss-1 { background: linear-gradient(160deg, #0a0a18 0%, #1a1a38 100%); }
+.f-toss-2 { background: linear-gradient(160deg, #0a1828 0%, #1a3050 100%); }
+.f-toss-3 { background: linear-gradient(160deg, #101828 0%, #202840 100%); }
+.f-toss-4 { background: linear-gradient(160deg, #0a1018 0%, #1a2028 100%); }
+.f-toss-5 { background: linear-gradient(160deg, #080a10 0%, #181a20 100%); }
+.f-toss-6 { background: linear-gradient(160deg, #060808 0%, #101212 100%); }
+
+.f-photo-1 { background: linear-gradient(160deg, #1a0830 0%, #38106a 100%); }
+.f-photo-2 { background: linear-gradient(160deg, #201006 0%, #3c2008 100%); }
+.f-photo-3 { background: linear-gradient(160deg, #0e1820 0%, #1c3028 100%); }
+.f-photo-4 { background: linear-gradient(160deg, #3a1008 0%, #cc3a24 100%); }
+.f-photo-5 { background: linear-gradient(160deg, #081828 0%, #1a3050 100%); }
+.f-photo-6 { background: linear-gradient(160deg, #0a0a0a 0%, #1a1a1a 100%); }
+
+/* 스토리보드 이미지 */
+.storyboard-img {
+  width: 100%;
+  border: 1px solid var(--border);
+  display: block;
+  margin-top: 40px;
+}
+.storyboard-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+/* meta tags */
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.case-tag {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--cream-dim);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  text-transform: uppercase;
+}
+
+/* two col meta */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 28px;
+}
+.two-col-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.two-col-body {
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 1.9;
+}
+.two-col-body strong { color: var(--cream); }
+
+/* ── CONTACT ── */
+#contact {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 120px 52px 80px;
+}
+.contact-headline {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+.contact-headline em {
+  font-style: normal;
+  color: var(--red);
+}
+.contact-desc {
+  font-size: 14px;
+  color: var(--cream-dim);
+  margin-bottom: 48px;
+  line-height: 1.8;
+}
+.contact-info {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 2.4;
+  letter-spacing: 0.06em;
+}
+.contact-info a {
+  color: var(--cream);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: border-color 0.2s;
+}
+.contact-info a:hover { border-color: var(--red); color: var(--red); }
+
+footer {
+  padding: 32px 52px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+}
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.15);
+  letter-spacing: 0.06em;
+}
+
+/* ── WOW A: 케이스 풀너비 히어로 배너 ── */
+.case-banner {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 100px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 64px;
+  border-top: 1px solid var(--border);
+}
+.case-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.case-banner-gamff { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 40%, #2a1e00 100%); }
+.case-banner-anua  { background: linear-gradient(135deg, #0a0a0a 0%, #001a12 40%, #002818 100%); }
+.case-banner-toss  { background: linear-gradient(135deg, #0a0a0a 0%, #00081a 40%, #000e28 100%); }
+
+.case-banner-index {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(100px, 18vw, 220px);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  position: absolute;
+  right: 40px;
+  bottom: -20px;
+  user-select: none;
+  pointer-events: none;
+}
+.case-banner-tag {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.case-banner-title {
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--cream);
+  max-width: 800px;
+}
+.case-banner-sub {
+  font-size: 14px;
+  color: var(--cream-dim);
+  margin-top: 20px;
+  max-width: 600px;
+  line-height: 1.7;
+}
+.case-banner-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+/* ── WOW B: 초대형 카피 타이포 ── */
+.big-copy-block {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 64px 0;
+  position: relative;
+  overflow: hidden;
+}
+.big-copy-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: block;
+}
+.big-copy-text {
+  font-size: clamp(36px, 6vw, 80px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--cream);
+}
+.big-copy-text em {
+  font-style: normal;
+  color: var(--red);
+}
+.big-copy-en {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: rgba(255,255,255,0.12);
+  margin-top: 12px;
+  display: block;
+}
+
+/* ── WOW C: 스크롤 reveal 애니메이션 ── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-reveal="1"] { transition-delay: 0s; }
+[data-reveal="2"] { transition-delay: 0.12s; }
+[data-reveal="3"] { transition-delay: 0.24s; }
+[data-reveal="4"] { transition-delay: 0.36s; }
+[data-reveal="5"] { transition-delay: 0.48s; }
+
+@media print {
+  #hero { height: auto; padding: 80px 0; }
+  nav { display: none; }
+  .hero-scroll { display: none; }
+  section { padding: 60px 52px; }
+  .case-hero { aspect-ratio: 16/6; }
+  .case-banner { width: 100%; margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">천재현</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#cases">Work</a></li>
+    <li><a href="#pipeline">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-line" id="heroLine"><span class="cursor"></span></p>
+  <div class="hero-divider" id="heroDivider"></div>
+  <p class="hero-name" id="heroName">천재현 · Chun Jaehyun</p>
+  <p class="hero-role" id="heroRole">Copywriter · AI Video Creator</p>
+  <div class="hero-scroll" id="heroScroll" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-tag">About</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-headline">일상을 바라보고,<br><em>광고로 번역합니다.</em></h2>
+      <p class="about-desc">클라이언트의 니즈를 듣고, 문제를 정의하고,<br>
+      크리에이티브로 풀어내는 것이 먼저입니다.<br><br>
+      AI로 직접 영상까지 만들기 때문에, 카피 한 줄이 씬에서 어떻게 살고 죽는지를 압니다.<br>
+      <strong>감독과 PD에게 더 구체적인 기획안을 줄 수 있는 카피라이터입니다.</strong><br><br>
+      창작의 고통이 영상으로 풀릴 때 기쁩니다.<br>
+      그 과정을 즐기고, 그게 나를 발전시킨다고 믿습니다.<br>
+      <strong>그래서 더 배우고, 더 성장하고 싶습니다.</strong></p>
+    </div>
+    <div class="about-meta">
+      <div class="meta-block">
+        <p class="meta-label">Education</p>
+        <p class="meta-item"><strong>고려대학교 세종캠퍼스</strong> 미디어문예창작전공 편입 · GPA 3.4/4.5</p>
+        <p class="meta-item"><strong>IAA-AD Diploma</strong> 국제광고협회 × KOBACO 광고교육원 · 300시간</p>
+        <p class="meta-item"><strong>패스트캠퍼스</strong> AI 영상 크리에이터 과정 · 2026 수강 중</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Skills</p>
+        <p class="meta-item">카피라이팅 · 광고 기획 · 스토리보드</p>
+        <p class="meta-item">Veo3 · Seedance 2.0 · Hailuo · ComfyUI</p>
+        <p class="meta-item">Claude · ChatGPT · Gemini</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Experience</p>
+        <p class="meta-item"><strong>국립낙동강생물자원관</strong> 전시부 인턴 · 2024<br>전시 컨셉·타이틀 제안, 야간탐사·OX 행사 기획 서포트</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="section-tag">Work</div>
+
+  <!-- WHY 블록 CSS 추가용 스타일 -->
+  <style>
+  .case-why {
+    padding: 52px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 52px;
+  }
+  .case-why-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .case-why-text {
+    font-size: clamp(20px, 2.4vw, 30px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+    color: var(--cream);
+  }
+  .case-why-text em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .pbi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 52px;
+  }
+  .pbi-col {
+    padding: 28px 28px;
+    border-right: 1px solid var(--border);
+  }
+  .pbi-col:last-child { border-right: none; }
+  .pbi-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .pbi-text {
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.9;
+  }
+  .pbi-text strong { color: var(--cream); font-weight: 700; }
+
+  .copy-block {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 36px 40px;
+    margin-bottom: 52px;
+  }
+  .copy-block-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .copy-block-text {
+    font-size: 15px;
+    line-height: 2.1;
+    color: var(--cream-dim);
+    white-space: pre-line;
+  }
+  .copy-block-text strong { color: var(--cream); font-weight: 700; }
+  .copy-block-key {
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+    color: var(--cream);
+    display: block;
+    margin: 20px 0 8px;
+  }
+  .copy-block-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 16px;
+  }
+  </style>
+
+  <!-- CASE 01 ANUA -->
+  <div class="case-block">
+
+    <!-- A: 풀너비 히어로 배너 -->
+    <div class="case-banner case-banner-anua">
+      <div class="case-banner-index">01</div>
+      <p class="case-banner-tag">Case 01 · 광고 기획 · K뷰티 · 2026</p>
+      <h2 class="case-banner-title">아누아 PDRN 미스트<br>광고 기획 + AI 영상 제작</h2>
+      <p class="case-banner-sub">브랜드 인사이트 도출 · 13컷 스토리보드 · 카피 · AI 영상 편집 전담 · 40초</p>
+      <div class="case-banner-tags">
+        <span class="case-tag">40s AI Video</span>
+        <span class="case-tag">AI 영상 제작 완료</span>
+        <span class="case-tag">ANUA</span>
+      </div>
+    </div>
+
+    <!-- WHY -->
+    <div class="case-why" data-reveal="1">
+      <p class="case-why-label">Why this brand</p>
+      <p class="case-why-text">PDRN 미스트 광고가 넘쳐났다. 다 비슷했다.<br><em>여름의 불편함</em>으로 차별점을 만들 수 있다고 봤다.</p>
+    </div>
+
+    <!-- B: 초대형 핵심 카피 -->
+    <div class="big-copy-block" data-reveal="3">
+      <span class="big-copy-label">Key Copy</span>
+      <p class="big-copy-text">수분을 채우고,<br><em>진정까지 한 번에.</em></p>
+      <span class="big-copy-en">여름 첫 수분은, 아누아.</span>
+    </div>
+
+    <!-- COPY 전문 -->
+    <div class="copy-block" data-reveal="4">
+      <p class="copy-block-text">수분 레벨 15%. 긴급 경보.
+햇빛, 열감, 건조감, 에어컨.
+피부 속 세포들이 위기에 처했다.
+
+<span class="copy-block-brand">여름 첫 수분은, 아누아 PDRN 미스트</span></p>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="process-section" data-reveal="5">
+      <p class="process-label">Process</p>
+      <div class="process-grid">
+        <div class="process-col">
+          <p class="process-num">01 / 브랜드 분석</p>
+          <p class="process-title">데이터부터 쌓았다</p>
+          <p class="process-body">아누아 사이트, PDRN 제품 정보, 경쟁사 광고를 NotebookLM에 넣고 트렌드 패턴을 읽었다. <strong>경쟁사 광고가 전부 성분 중심</strong>이었다. 그게 빈자리였다.</p>
+        </div>
+        <div class="process-col">
+          <p class="process-num">02 / 인사이트 도출</p>
+          <p class="process-title">데이터 밖으로 나갔다</p>
+          <p class="process-body">자료만으로 부족했다. 주변 사람들에게 직접 물어봤다. 여름에 피부가 언제 가장 불편한지. <strong>더위, 에어컨, 건조함.</strong> 그 순간이 광고의 시작이었다.</p>
+        </div>
+        <div class="process-col">
+          <p class="process-num">03 / 카피 → 스토리보드</p>
+          <p class="process-title">계절로 차별화했다</p>
+          <p class="process-body">경쟁사 영상을 보면 다 똑같았다. 인플루언서 → 성분 → 제품. AI 영상으로는 그 공식을 깨고 <strong>일상의 공감</strong>으로 풀기로 했다. 계절 불편함을 먼저 공감시키고, 세포 캐릭터 세계관으로 해결까지 연결. 카피 확정 후 13컷 스토리보드 설계 → AI 영상 제작. <span style="color:rgba(255,255,255,0.25);font-size:11px;">· AI 생성 영문 텍스트 오타 일부 포함</span></p>
+        </div>
+      </div>
+      <div class="process-insight">"광고 레퍼런스를 분석해서 <strong>다 비슷하다</strong>는 걸 먼저 확인했다. 차별점은 데이터 밖, 사람에게서 나왔다."</div>
+    </div>
+
+    <div class="frames-section" data-reveal="1">
+      <img src="anua_storyboard.png" alt="ANUA 스토리보드" style="width:100%; border-radius:8px; display:block; margin-bottom:3px;">
+      <div class="frames-grid">
+        <div class="frame f-anua-1">
+          <img src="anua_frame1.png" alt="ANUA 씬1">
+          <p class="frame-scene">S1-2 / 세포 캐릭터 등장</p>
+          <p class="frame-copy">피부 속 세포들의<br>평화로운 일상...</p>
+        </div>
+        <div class="frame f-anua-2">
+          <img src="anua_frame2.png" alt="ANUA 씬2">
+          <p class="frame-scene">S2 / 수분 레벨 경보</p>
+          <p class="frame-copy">긴급 경보!<br>수분 레벨 15%</p>
+        </div>
+        <div class="frame f-anua-3">
+          <img src="anua_frame3.png" alt="ANUA 씬3">
+          <p class="frame-scene">S3-5 / 복합 원인 노출</p>
+          <p class="frame-copy">햇빛, 열감, 건조감.<br>에어컨 바람까지.</p>
+        </div>
+        <div class="frame f-anua-4">
+          <img src="anua_frame4.png" alt="ANUA 씬4">
+          <p class="frame-scene">S7 / 제품 등장</p>
+          <p class="frame-copy">수분을 채우고,<br>진정까지 한 번에!</p>
+        </div>
+        <div class="frame f-anua-5">
+          <img src="anua_frame5.png" alt="ANUA 씬5">
+          <p class="frame-scene">S8-10 / 성분 소개</p>
+          <p class="frame-copy">PDRN · 히알루론산<br>· 콜라겐</p>
+        </div>
+        <div class="frame f-anua-6">
+          <img src="anua_frame6.png" alt="ANUA 씬6">
+          <p class="frame-scene">S12 / 엔딩</p>
+          <p class="frame-copy">여름 첫 수분은,<br>아누아 PDRN 미스트</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 02 TOSS -->
+  <div class="case-block">
+
+    <!-- A: 풀너비 히어로 배너 -->
+    <div class="case-banner case-banner-toss">
+      <div class="case-banner-index">02</div>
+      <p class="case-banner-tag">Case 02 · 자작 광고 기획 · 캠페인 전략 · 2025</p>
+      <h2 class="case-banner-title">"토스가 뭐가<br>어려워"</h2>
+      <p class="case-banner-sub">브랜드 현황 분석 · 타겟 재설정 · 크리에이티브 콘셉트 · 카피 · KPI까지 단독 설계한 자작 기획안</p>
+      <div class="case-banner-tags">
+        <span class="case-tag">30s Shortform</span>
+        <span class="case-tag">자작 기획안</span>
+        <span class="case-tag">스토리보드 완성</span>
+      </div>
+    </div>
+
+    <!-- WHY -->
+    <div class="case-why" data-reveal="1">
+      <p class="case-why-label">Why this brand</p>
+      <p class="case-why-text">부모님이 토스를 안 쓴다. <em>광고 하나로 인식을 바꿀 수 있을지</em> 직접 설계해보고 싶었다.</p>
+    </div>
+
+    <!-- B: 초대형 핵심 카피 -->
+    <div class="big-copy-block" data-reveal="3">
+      <span class="big-copy-label">Key Copy</span>
+      <p class="big-copy-text">어렵지 않아요.<br><em>토스니까요.</em></p>
+      <span class="big-copy-en">Toss. Double meaning.</span>
+    </div>
+
+    <!-- COPY 전문 -->
+    <div class="copy-block" data-reveal="4">
+      <p class="copy-block-text">공이 날아온다. 주변 사람들이 피한다.
+할머니만 자연스럽게 일어선다.
+
+<strong>완벽한 배구 토스. 관중 환호.</strong>
+해설: "저 할머니 토스 고수이신데요?!"
+
+손녀: "할머니 어떻게 한 거야?"
+할머니: <strong>"토스가 뭐가 어려워, 다 하는 거지 뭐"</strong>
+
+폰을 꺼낸다. 앱을 연다. 세 번 누른다.
+
+<span class="copy-block-brand">TOSS — 40~50대 자녀 세대 타겟 / 30초</span></p>
+    </div>
+
+    <!-- A/B/C 안 -->
+    <div class="pbi-grid" data-reveal="5" style="margin-bottom:52px;">
+      <div class="pbi-col">
+        <p class="pbi-label">A안 — 채택</p>
+        <p class="pbi-text"><strong>"토스가 뭐가 어려워"</strong><br>배구 토스 더블미닝. 할머니가 토스를 완벽하게 받아치는 순간, "어렵다"는 인식이 무너진다. 인식의 틈을 언어로 메운다.</p>
+      </div>
+      <div class="pbi-col">
+        <p class="pbi-label">B안</p>
+        <p class="pbi-text"><strong>"다음엔 네가 해봐"</strong><br>자녀가 부모에게 토스 송금을 가르치는 씬. 세 번 탭으로 끝나는 순간 부모가 "이게 다야?" 반응. 단순함이 반전이 된다.</p>
+      </div>
+      <div class="pbi-col">
+        <p class="pbi-label">C안</p>
+        <p class="pbi-text"><strong>"처음엔 다 어려웠어"</strong><br>리모컨·ATM·스마트폰을 처음 쓰던 시절 회상. "그것도 배웠잖아." 새로움에 대한 두려움을 공감으로 푸는 방식.</p>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="process-section" data-reveal="5">
+      <p class="process-label">Process</p>
+      <div class="process-grid">
+        <div class="process-col">
+          <p class="process-num">01 / 관찰</p>
+          <p class="process-title">"내가 설득할 수 있을까?"</p>
+          <p class="process-body">일상의 불편함을 광고로 풀고 싶다는 게 내 출발점이다. 부모님 세대가 토스를 안 쓰는 걸 보면서 <strong>광고 하나로 인식을 바꿀 수 있을지</strong> 직접 설계해보고 싶었다.</p>
+        </div>
+        <div class="process-col">
+          <p class="process-num">02 / 분석</p>
+          <p class="process-title">데이터로 증명했다</p>
+          <p class="process-body">Claude 스킬로 토스 브랜드 자료를 분석하고 데이터를 뽑았다. <strong>20대 가입율 94.5%, 50대 이상 24%.</strong> 문제는 제품이 아니라 "어렵다"는 인식이었다. KPI까지 설정했다.</p>
+        </div>
+        <div class="process-col">
+          <p class="process-num">03 / 언어</p>
+          <p class="process-title">토스가 배구 용어였다</p>
+          <p class="process-body">광고·책·영화·팝업 등 다방면에서 인사이트를 쌓아왔다. 언어유희를 좋아하다 보니 자연스럽게 떠올랐다. <strong>토스는 배구 용어이기도 하다.</strong> 억지로 찾은 게 아니었다.</p>
+        </div>
+      </div>
+      <div class="process-insight">"아이디어는 책상 앞이 아니라 <strong>일상을 많이 보고, 읽고, 들어야</strong> 나온다."</div>
+    </div>
+
+    <div class="frames-section" data-reveal="1">
+      <img src="toss_storyboard.png" alt="TOSS 스토리보드" style="width:100%; border-radius:8px; display:block; margin-bottom:3px;">
+      <div class="frames-grid">
+        <div class="frame f-toss-1">
+          <img src="toss_frame1.png" alt="TOSS 씬1">
+          <p class="frame-scene">S1 · 0~3초 / 배구경기장</p>
+          <p class="frame-copy">할머니와 손녀,<br>경기를 보고 있다.</p>
+        </div>
+        <div class="frame f-toss-2">
+          <img src="toss_frame2.png" alt="TOSS 씬2">
+          <p class="frame-scene">S2 · 3~9초 / 슬로모션</p>
+          <p class="frame-copy">"저 할머니<br>토스 고수이신데요?!"</p>
+        </div>
+        <div class="frame f-toss-3">
+          <img src="toss_frame3.png" alt="TOSS 씬3">
+          <p class="frame-scene">S3 · 9~15초 / 반응 + 대사</p>
+          <p class="frame-copy">"토스가 뭐가 어려워,<br>다 하는 거지 뭐"</p>
+        </div>
+        <div class="frame f-toss-4">
+          <img src="toss_frame4.png" alt="TOSS 씬4">
+          <p class="frame-scene">S4 · 15~18초 / 앱 오픈</p>
+          <p class="frame-copy">이것도 토스</p>
+        </div>
+        <div class="frame f-toss-5">
+          <img src="toss_frame5.png" alt="TOSS 씬5">
+          <p class="frame-scene">S5 · 18~27초 / UX 시연</p>
+          <p class="frame-copy">세 번이면 끝.<br>송금 완료.</p>
+        </div>
+        <div class="frame f-toss-6">
+          <img src="toss_frame6.png" alt="TOSS 씬6">
+          <p class="frame-scene">S6 · 27~30초 / 엔딩</p>
+          <p class="frame-copy">어렵지 않아요.<br>토스니까요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 03 GAMFF -->
+  <div class="case-block">
+
+    <!-- A: 풀너비 히어로 배너 -->
+    <div class="case-banner case-banner-gamff">
+      <div class="case-banner-index">03</div>
+      <p class="case-banner-tag">Case 03 · AI 영상 · 공모전 출품 · 2026</p>
+      <h2 class="case-banner-title">산동생막걸리:<br>三代가 빚다</h2>
+      <p class="case-banner-sub">2026 경북 국제 AI·메타버스 영상 공모전 — 60초 AI 영상 · 기획·카피·스토리보드·편집 전담</p>
+      <div class="case-banner-tags">
+        <span class="case-tag">60s AI Video</span>
+        <span class="case-tag">출품 완료</span>
+        <span class="case-tag">GAMFF 2026</span>
+      </div>
+    </div>
+
+    <!-- WHY -->
+    <div class="case-why" data-reveal="1">
+      <p class="case-why-label">Why this contest</p>
+      <p class="case-why-text">공모전을 발견했을 때 산동탁주의 <em>100년 3대 서사</em>가 눈에 들어왔다.<br>촬영 불가능한 백 년 전을 AI로 처음 시각화할 수 있었다.</p>
+    </div>
+
+    <!-- B: 초대형 핵심 카피 -->
+    <div class="big-copy-block" data-reveal="3">
+      <span class="big-copy-label">Key Copy</span>
+      <p class="big-copy-text">계절이 지나도,<br>시절이 지나도<br><em>변하지 않는 손맛.</em></p>
+      <span class="big-copy-en">구미를 빚다.</span>
+    </div>
+
+    <!-- COPY 전문 -->
+    <div class="copy-block" data-reveal="4">
+      <p class="copy-block-text">1924년 새벽. 이 냄새로 시작됐습니다.
+텅 빈 공장에도, 손은 멈추지 않았습니다.
+백 년이 지났는데, 아직 같은 냄새입니다.
+삼대의 손으로 지켜냈습니다.
+
+<span class="copy-block-brand">산동생막걸리 × GAMFF 2026</span></p>
+      <a href="https://youtu.be/mrl_TaG2cvY" target="_blank" class="video-btn" style="margin-top:28px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        영상 보기
+      </a>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="process-section" data-reveal="5">
+      <p class="process-label">Process</p>
+      <div class="process-grid">
+        <div class="process-col">
+          <p class="process-num">01 / 발견</p>
+          <p class="process-title">공모전에서 브랜드를 찾았다</p>
+          <p class="process-body">조장으로 팀과 공모전을 탐색하다 GAMFF를 발견했다. 지역기업 AI 광고 부문에서 산동탁주양조장을 찾아보니 <strong>100년 3대 서사</strong>가 있었다. 이 이야기를 AI로 살려보고 싶었다.</p>
+        </div>
+        <div class="process-col">
+          <p class="process-num">02 / 연출</p>
+          <p class="process-title">실사로 못 찍는 걸 AI로</p>
+          <p class="process-body">1924년 창업 당시 사진이 없었다. 오히려 기회였다. <strong>흑백→세피아→풀컬러</strong>, 시대별 화면으로 100년을 연출했다. 실사 카메라로는 불가능한 장면을 AI가 처음으로 가능하게 했다.</p>
+        </div>
+        <div class="process-col">
+          <p class="process-num">03 / 판단</p>
+          <p class="process-title">문제를 발견하면 바꿨다</p>
+          <p class="process-body">AI 생성 인물에서 초상권 이슈를 직접 발견해 전부 교체했다. 거품 오버레이로 시간 전환을 풀었다. <strong>기획·카피·스토리보드·편집</strong> 전 과정을 조장으로 전담해 완성했다.</p>
+        </div>
+      </div>
+      <div class="process-insight">"실사로 찍을 수 없는 100년을 AI로 처음 시각화했다. <strong>없는 사진이 문제가 아니라 기회였다.</strong>"</div>
+    </div>
+
+    <!-- 스토리보드 -->
+    <img src="storyboard_gamff.png" alt="산동생막걸리 스토리보드" class="storyboard-img" data-reveal="2">
+
+    <div class="frames-section" data-reveal="3">
+      <div class="frames-grid">
+        <div class="frame f-gamff-1">
+          <img src="gamff_frame1.png" alt="GAMFF 씬1">
+          <p class="frame-scene">흑백 / 1924년 새벽</p>
+          <p class="frame-copy">이 향으로<br>시작됐습니다.</p>
+        </div>
+        <div class="frame f-gamff-2">
+          <img src="gamff_frame2.png" alt="GAMFF 씬2">
+          <p class="frame-scene">흑백 / 공장 · 손 홀로작업</p>
+          <p class="frame-copy">텅 빈 공장에도,<br>손은 멈추지 않았습니다.</p>
+        </div>
+        <div class="frame f-gamff-3">
+          <img src="gamff_frame3.png" alt="GAMFF 씬3">
+          <p class="frame-scene">세피아 / 1991년 · 매치컷</p>
+          <p class="frame-copy">백 년이 지났는데,<br>아직 같은 향입니다.</p>
+        </div>
+        <div class="frame f-gamff-4">
+          <img src="gamff_frame4.png" alt="GAMFF 씬4">
+          <p class="frame-scene">풀컬러 / 2024년 · 매치컷</p>
+          <p class="frame-copy">삼대의 손으로<br>지켜냈습니다.</p>
+        </div>
+        <div class="frame f-gamff-5">
+          <img src="gamff_frame5.png" alt="GAMFF 씬5">
+          <p class="frame-scene">엔딩 카드 · 수미상결</p>
+          <p class="frame-copy">계절이 지나도,<br>시절이 지나도</p>
+        </div>
+        <div class="frame f-gamff-6">
+          <img src="gamff_frame6.png" alt="GAMFF 씬6">
+          <p class="frame-scene">풀컬러 / 로고 아웃</p>
+          <p class="frame-copy">변하지 않는 손맛,<br>구미를 빚다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="section-tag">How I Work</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; margin-bottom:64px;">
+    <div>
+      <h2 style="font-size:clamp(28px,3.5vw,44px); font-weight:900; letter-spacing:-0.025em; line-height:1.2; color:var(--cream);">기획이 영상이 된다.<br><span style="color:var(--red);">카피가 씬이 된다.</span></h2>
+    </div>
+    <div>
+      <p style="font-size:14px; line-height:2.0; color:var(--cream-dim);">클라이언트 니즈를 듣고, 그 안에서 스토리를 기획하고, A/B/C안을 제안한다.<br>
+      <strong style="color:var(--cream);">카피와 콘티가 확정된 뒤에야 AI를 켠다.</strong> 내가 기획한 것이 영상으로 완성되는 순간이 목표다.</p>
+    </div>
+  </div>
+
+  <!-- 9단계 워크플로우 -->
+  <style>
+  .pipeline-flow {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 3px;
+  }
+  .pf-step {
+    padding: 20px 16px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .pf-step:last-child { border-right: none; }
+  .pf-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; font-weight: 700;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .pf-title {
+    font-size: 11px; font-weight: 700;
+    color: var(--cream);
+    line-height: 1.4; margin-bottom: 8px;
+  }
+  .pf-tool {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .pf-step.t-claude { border-top: 2.5px solid var(--red); }
+  .pf-step.t-legal  { border-top: 2.5px solid #e6a817; }
+  .pf-step.t-mj     { border-top: 2.5px solid rgba(255,255,255,0.2); }
+  .pf-step.t-comfy  { border-top: 2.5px solid rgba(255,255,255,0.2); }
+  .pf-step.t-higgs  { border-top: 2.5px solid rgba(255,255,255,0.2); }
+  .pf-step.t-edit   { border-top: 2.5px solid rgba(255,255,255,0.2); }
+  .pf-step.t-claude .pf-tool { color: var(--red); }
+  .pf-step.t-legal  .pf-tool { color: #e6a817; }
+  .pf-step.t-mj     .pf-tool,
+  .pf-step.t-comfy  .pf-tool,
+  .pf-step.t-higgs  .pf-tool,
+  .pf-step.t-edit   .pf-tool { color: var(--cream-dim); }
+
+  .pipeline-output-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .po-card {
+    padding: 24px 20px;
+    border-right: 1px solid var(--border);
+  }
+  .po-card:last-child { border-right: none; }
+  .po-phase {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 14px;
+  }
+  .po-output {
+    font-size: 12px; color: var(--cream-dim);
+    line-height: 2.0;
+  }
+
+  /* 법적 리스크 */
+  .legal-section {
+    border: 1px solid rgba(230,168,23,0.2);
+    margin-bottom: 48px;
+  }
+  .legal-header {
+    background: rgba(230,168,23,0.06);
+    border-bottom: 1px solid rgba(230,168,23,0.2);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .legal-step-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #e6a817;
+    border: 1px solid rgba(230,168,23,0.4);
+    padding: 4px 10px;
+  }
+  .legal-header-title {
+    font-size: 12px; font-weight: 700;
+    color: var(--cream); letter-spacing: 0.04em;
+  }
+  .legal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .legal-col {
+    padding: 24px 20px;
+    border-right: 1px solid rgba(230,168,23,0.12);
+  }
+  .legal-col:last-child { border-right: none; }
+  .legal-cat {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #e6a817; margin-bottom: 16px;
+  }
+  .legal-item {
+    font-size: 12px; color: var(--cream-dim);
+    line-height: 1.6; margin-bottom: 12px;
+    padding-left: 10px;
+    border-left: 2px solid rgba(230,168,23,0.2);
+    padding-bottom: 2px;
+  }
+  .legal-item strong { color: var(--cream); }
+
+  /* 핵심 원칙 */
+  .pipeline-principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  .pp-item {
+    padding: 32px 28px;
+    border-right: 1px solid var(--border);
+  }
+  .pp-item:last-child { border-right: none; }
+  .pp-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.16em; color: var(--red);
+    margin-bottom: 14px;
+  }
+  .pp-text {
+    font-size: 13px; color: var(--cream-dim);
+    line-height: 1.9;
+  }
+  .pp-text strong { color: var(--cream); }
+  </style>
+
+  <div class="pipeline-flow" data-reveal="1">
+    <div class="pf-step t-claude">
+      <p class="pf-num">01</p>
+      <p class="pf-title">브랜드 리서치</p>
+      <p class="pf-tool">Claude</p>
+    </div>
+    <div class="pf-step t-claude">
+      <p class="pf-num">02</p>
+      <p class="pf-title">크리에이티브 브리프 + 페르소나</p>
+      <p class="pf-tool">Claude</p>
+    </div>
+    <div class="pf-step t-claude">
+      <p class="pf-num">03</p>
+      <p class="pf-title">카피 컨셉 + A/B/C안</p>
+      <p class="pf-tool">Claude</p>
+    </div>
+    <div class="pf-step t-claude">
+      <p class="pf-num">04</p>
+      <p class="pf-title">씬 콘티 설계</p>
+      <p class="pf-tool">Claude</p>
+    </div>
+    <div class="pf-step t-legal">
+      <p class="pf-num">05</p>
+      <p class="pf-title">법적 리스크 체크</p>
+      <p class="pf-tool">초상권 · 저작권</p>
+    </div>
+    <div class="pf-step t-mj">
+      <p class="pf-num">06</p>
+      <p class="pf-title">AI 모델 생성</p>
+      <p class="pf-tool">MJ / ComfyUI</p>
+    </div>
+    <div class="pf-step t-comfy">
+      <p class="pf-num">07</p>
+      <p class="pf-title">씬 이미지 생성</p>
+      <p class="pf-tool">MJ / ComfyUI</p>
+    </div>
+    <div class="pf-step t-higgs">
+      <p class="pf-num">08</p>
+      <p class="pf-title">영상 변환</p>
+      <p class="pf-tool">Veo3 / Kling</p>
+    </div>
+    <div class="pf-step t-edit">
+      <p class="pf-num">09</p>
+      <p class="pf-title">편집 & 카피 자막</p>
+      <p class="pf-tool">CapCut / PR</p>
+    </div>
+  </div>
+
+  <div class="pipeline-output-row" data-reveal="2">
+    <div class="po-card">
+      <p class="po-phase">전략 단계 (01–04)</p>
+      <p class="po-output">브랜드 에센스<br>타겟 인사이트<br>브리프 8항목<br>CF 페르소나<br>Hook Canvas<br>무드보드<br>씬별 콘티</p>
+    </div>
+    <div class="po-card">
+      <p class="po-phase">이미지 단계 (06–07)</p>
+      <p class="po-output">시그니처 AI 모델<br>캐릭터 일관성 고정<br>씬별 16:9 이미지<br>스타일 통일</p>
+    </div>
+    <div class="po-card">
+      <p class="po-phase">영상 단계 (08)</p>
+      <p class="po-output">씬별 3~5초 클립<br>절제된 모션<br>씬 성격별<br>카메라 무브 설계</p>
+    </div>
+    <div class="po-card">
+      <p class="po-phase">완성 단계 (09)</p>
+      <p class="po-output">Hook Canvas 기반<br>편집 구조<br>감정 카피 자막<br>브랜드 엔딩<br>H.264 / 24fps</p>
+    </div>
+  </div>
+
+  <div class="legal-section" data-reveal="3">
+    <div class="legal-header">
+      <span class="legal-step-badge">STEP 05</span>
+      <span class="legal-header-title">법적 리스크 체크리스트 · AI 영상 콘텐츠 제작 전 필수 점검</span>
+    </div>
+    <div class="legal-grid">
+      <div class="legal-col">
+        <p class="legal-cat">침해 요건</p>
+        <div class="legal-item"><strong>소프트웨어 라이선스</strong><br>상업용 툴 Pro 플랜 여부 확인</div>
+        <div class="legal-item"><strong>AI 기본법 워터마크</strong><br>'AI 생성 콘텐츠 포함' 표기</div>
+        <div class="legal-item"><strong>초상권·퍼블리시티권</strong><br>실존 인물·연예인 유사 여부</div>
+        <div class="legal-item"><strong>폰트 저작권</strong><br>공공 무료폰트 또는 라이선스 확인</div>
+        <div class="legal-item"><strong>BGM·광고음악</strong><br>저작권 명확한 상업용 음원 사용</div>
+      </div>
+      <div class="legal-col">
+        <p class="legal-cat">라이선스 권리</p>
+        <div class="legal-item"><strong>창작적 기여 포함</strong><br>AI 원본 그대로 사용 시 저작권 등록 거부</div>
+        <div class="legal-item"><strong>30% 이상 변형</strong><br>디자이너 가공 과정 스크린샷 기록</div>
+        <div class="legal-item"><strong>학습데이터 리스크</strong><br>타사 로고·디자인 아이덴티티 포함 여부</div>
+        <div class="legal-item"><strong>시각적 유사성 검토</strong><br>생성 전 레퍼런스 충돌 여부 확인</div>
+      </div>
+      <div class="legal-col">
+        <p class="legal-cat">회사 기밀·보안</p>
+        <div class="legal-item"><strong>미공개 제품 Spec</strong><br>범용 AI 입력 전 비식별 처리</div>
+        <div class="legal-item"><strong>기업 내부 전략</strong><br>마케팅 문서 포함 여부 확인</div>
+        <div class="legal-item"><strong>고객·협력사 정보</strong><br>개인정보 포함 시 Opt-out 모드</div>
+        <div class="legal-item"><strong>Enterprise 계정 사용</strong><br>보안 강화 · 로컬 AI 우선 검토</div>
+      </div>
+      <div class="legal-col">
+        <p class="legal-cat">Uncanny 검수</p>
+        <div class="legal-item"><strong>이미지 왜곡</strong><br>손가락·원근감·공중부양 객체 파악</div>
+        <div class="legal-item"><strong>논리성 오류</strong><br>음식·사물 관계, 인물묘사 체크</div>
+        <div class="legal-item"><strong>편향·윤리 왜곡</strong><br>인종·성별·문화적 고정관념 여부</div>
+        <div class="legal-item"><strong>사실관계 확인</strong><br>제품 정보·텍스트 오타 최종 검수</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipeline-principles" data-reveal="4">
+    <div class="pp-item">
+      <p class="pp-num">RULE 01</p>
+      <p class="pp-text"><strong>브리프가 없으면 영상을 켜지 않는다.</strong><br>클라이언트 니즈가 카피보다 먼저다.</p>
+    </div>
+    <div class="pp-item">
+      <p class="pp-num">RULE 02</p>
+      <p class="pp-text"><strong>카피 한 줄이 영상 전체를 끌어야 한다.</strong><br>씬은 카피를 증명하는 수단이다.</p>
+    </div>
+    <div class="pp-item">
+      <p class="pp-num">RULE 03</p>
+      <p class="pp-text"><strong>내가 쓴 글이 영상으로 나오는 것을 확인한다.</strong><br>기획의 끝은 완성된 화면이다.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Contact</div>
+  <h2 class="contact-headline">글이 영상이<br>되는 순간을 <em>씁니다.</em></h2>
+  <p class="contact-desc">카피라이팅부터 AI 영상 제작까지.<br>함께 만들고 싶은 것이 있다면 연락 주세요.</p>
+  <div class="contact-info">
+    <a href="mailto:chs065612@gmail.com">chs065612@gmail.com</a><br>
+    010-9138-5628
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">천재현 · Chun Jaehyun</span>
+  <span class="footer-copy">Copywriter · AI Video Creator · 2026</span>
+</footer>
+
+<script>
+// NAV scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// HERO 타이핑 애니메이션
+const lines = ['일상을 바라보고', '불편함을 발견해', '광고로 번역합니다'];
+const heroLine = document.getElementById('heroLine');
+const heroDivider = document.getElementById('heroDivider');
+const heroName = document.getElementById('heroName');
+const heroRole = document.getElementById('heroRole');
+const heroScroll = document.getElementById('heroScroll');
+
+let lineIdx = 0;
+let charIdx = 0;
+let isDeleting = false;
+let phase = 'typing'; // typing | pause | deleting | next | done
+
+function type() {
+  const current = lines[lineIdx];
+
+  if (phase === 'typing') {
+    heroLine.innerHTML = current.slice(0, charIdx) + '<span class="cursor"></span>';
+    if (charIdx < current.length) {
+      charIdx++;
+      setTimeout(type, 80);
+    } else {
+      phase = 'pause';
+      setTimeout(type, lineIdx === lines.length - 1 ? 600 : 900);
+    }
+  } else if (phase === 'pause') {
+    if (lineIdx === lines.length - 1) {
+      // 마지막 줄 — 멈추고 나머지 등장
+      heroLine.innerHTML = current + '<span class="cursor"></span>';
+      heroDivider.classList.add('visible');
+      setTimeout(() => {
+        heroName.classList.add('visible');
+        heroRole.classList.add('visible');
+        heroScroll.classList.add('visible');
+      }, 400);
+    } else {
+      phase = 'deleting';
+      setTimeout(type, 60);
+    }
+  } else if (phase === 'deleting') {
+    heroLine.innerHTML = current.slice(0, charIdx) + '<span class="cursor"></span>';
+    if (charIdx > 0) {
+      charIdx--;
+      setTimeout(type, 40);
+    } else {
+      lineIdx++;
+      charIdx = 0;
+      phase = 'typing';
+      setTimeout(type, 300);
+    }
+  }
+}
+
+setTimeout(type, 600);
+
+// C: 스크롤 reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
