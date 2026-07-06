@@ -29,6 +29,8 @@ body {
   overflow-x: hidden;
 }
 
+p { text-wrap: pretty; }
+
 /* ── HERO ── */
 #hero {
   height: 100vh;
@@ -310,8 +312,10 @@ section {
   content: '—';
   position: absolute;
   left: 0;
+  top: 0;
   color: rgba(255,255,255,0.2);
-  font-size: 10px;
+  font-size: 13px;
+  line-height: 2.2;
 }
 .meta-item strong { color: var(--cream); font-weight: 600; }
 
@@ -727,12 +731,124 @@ section {
   margin-top: 40px;
 }
 
+/* ── DATA BAR CHART ── */
+.data-chart {
+  margin-top: 18px;
+  padding: 18px 20px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--border);
+}
+.data-chart-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.data-bar-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 52px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.data-bar-row:last-child { margin-bottom: 0; }
+.data-bar-label {
+  font-size: 12px;
+  color: var(--cream-dim);
+  font-weight: 500;
+}
+.data-bar-track {
+  height: 22px;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+}
+.data-bar-fill {
+  height: 100%;
+  display: block;
+  width: 0 !important;
+  transition: width 1.3s cubic-bezier(0.2,0.8,0.2,1);
+}
+.data-bar-fill.animated {
+  width: var(--tw) !important;
+}
+.data-bar-fill.high { background: var(--red); }
+.data-bar-fill.low  { background: rgba(255,255,255,0.25); }
+.data-bar-fill.c-red    { background: #CC3A24; }
+.data-bar-fill.c-blue   { background: #3A78CC; }
+.data-bar-fill.c-green  { background: #3AA05A; }
+.data-bar-fill.c-amber  { background: #D89A2A; }
+.data-bar-fill.c-purple { background: #8A5ACC; }
+.data-bar-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cream);
+  text-align: right;
+}
+
+/* ── STAT CARDS (분석 수치) ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 16px;
+}
+.stat-card {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--border);
+  padding: 16px 12px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-desc {
+  font-size: 10px;
+  color: var(--cream-dim);
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+/* ── CATEGORY LABEL ── */
+.cr-category-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.15);
+  text-transform: uppercase;
+  padding: 12px 0 12px 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+  grid-column: 1 / -1;
+}
+
 /* ── CASE ROW (텍스트 좌 | 이미지 우) ── */
 .case-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
   gap: 2px;
   margin-top: 2px;
+}
+.case-row .cr-category-label {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+.case-row .case-row-left {
+  grid-row: 2;
+}
+.case-row .case-row-right {
+  grid-row: 2;
 }
 .case-row-left {
   display: flex;
@@ -780,18 +896,39 @@ section {
 .cr-body strong { color: var(--cream); }
 .cr-copy-main {
   font-size: clamp(18px, 2vw, 26px);
-  font-weight: 800;
+  font-weight: 400;
   line-height: 1.4;
-  color: var(--cream);
+  color: var(--cream-dim);
   letter-spacing: -0.02em;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
-.cr-copy-main em { color: var(--red); font-style: normal; }
+.cr-copy-main em { color: var(--cream-dim); font-style: normal; font-weight: 400; }
 .cr-copy-sub {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.85;
+  color: var(--red);
+  word-break: keep-all;
+}
+.cr-copy-note {
   font-size: 13px;
+  font-weight: 400;
   line-height: 1.8;
   color: var(--cream-dim);
   word-break: keep-all;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.cr-copy-note-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
 }
 .cr-process {
   display: flex;
@@ -1173,7 +1310,7 @@ footer {
   <div class="section-tag">About</div>
   <div class="about-grid">
     <div>
-      <h2 class="about-headline">일상을 바라보고,<br><em>광고로 번역합니다.</em></h2>
+      <h2 class="about-headline">일상을 바라보고<br><em>광고로 번역합니다</em></h2>
       <p class="about-desc">클라이언트의 니즈를 듣고, 문제를 정의하고,<br>
       크리에이티브로 풀어내는 것이 먼저입니다.<br><br>
       AI로 직접 영상까지 만들기 때문에, 카피 한 줄이 씬에서 어떻게 살고 죽는지를 압니다.<br>
@@ -1314,7 +1451,7 @@ footer {
     <div class="case-banner case-banner-anua">
       <div class="case-banner-index">01</div>
       <p class="case-banner-tag">Case 01 · 광고 기획 · K뷰티 · 2026</p>
-      <h2 class="case-banner-title">아누아 PDRN 미스트<br>광고 기획 + AI 영상 제작</h2>
+      <h2 class="case-banner-title">세포들의<br>여름 SOS</h2>
       <p class="case-banner-sub">브랜드 인사이트 도출 · 13컷 스토리보드 · 카피 · AI 영상 편집 전담 · 40초</p>
       <div class="case-banner-tags">
         <span class="case-tag">40s AI Video</span>
@@ -1323,55 +1460,76 @@ footer {
       </div>
     </div>
 
-    <!-- ROW 1: WHY + 키카피 | 대표 컷 -->
+    <!-- WHY -->
     <div class="case-row" data-reveal="1">
+      <div class="cr-category-label">WHY</div>
       <div class="case-row-left">
         <div class="cr-block">
-          <p class="cr-label">진행 배경</p>
-          <p class="cr-body">PDRN 미스트 광고가 넘쳐났다. 전부 인플루언서 → 성분 → 제품 구조였다. 경쟁사 광고를 분석하니 <strong>일상의 불편함으로 공감을 먼저 사는 광고가 없었다.</strong> 그게 빈자리였다.</p>
-        </div>
-        <div class="cr-block cr-copy">
-          <p class="cr-label">Key Copy</p>
-          <p class="cr-copy-main">수분을 채우고,<br><em>진정까지 한 번에.</em></p>
-          <p class="cr-copy-sub">수분 레벨 15%. 긴급 경보. 햇빛, 열감, 건조감, 에어컨.<br>피부 속 세포들이 위기에 처했다.</p>
+          <p class="cr-label">왜 이 브랜드인가</p>
+          <p class="cr-body">패스트캠퍼스 과제로 브랜드를 직접 골라야 했다. 이미 아는 브랜드는 제외하고, 몰랐던 브랜드를 찾다가 아누아를 만났다. <strong>여름을 겨냥한 계절 마케팅</strong>과 색감이 눈에 들어왔다. 계절의 불편함으로 풀어보고 싶었다.</p>
         </div>
       </div>
       <div class="case-row-right">
-        <div class="frame frame-hero f-anua-6">
-          <img src="anua_frame6.png" alt="ANUA 엔딩 씬">
-          <p class="frame-scene">S12 / 엔딩</p>
-          <p class="frame-copy">여름 첫 수분은,<br>아누아 PDRN 미스트</p>
+        <div class="frame frame-hero f-anua-3">
+          <img src="anua_frame3.png" alt="ANUA 계절 불편함 씬">
+          <p class="frame-scene">S3-5 / 복합 원인 노출</p>
+          <p class="frame-copy">햇빛, 열감, 건조감.<br>에어컨 바람까지.</p>
         </div>
       </div>
     </div>
 
-    <!-- ROW 2: PROCESS | 스토리보드 -->
+    <!-- HOW -->
     <div class="case-row" data-reveal="2">
+      <div class="cr-category-label">HOW</div>
       <div class="case-row-left">
         <div class="cr-block">
-          <p class="cr-label">담당 업무 및 진행 사항</p>
+          <p class="cr-label">어떻게 풀었나</p>
           <div class="cr-process">
             <div class="cr-step">
               <p class="cr-step-num">01 / 브랜드 분석</p>
-              <p class="cr-step-body">아누아 사이트, PDRN 제품 정보, 경쟁사 광고를 <strong>NotebookLM에 넣고</strong> 트렌드 패턴을 읽었다. 직접 주변에도 물어봤다. 여름에 피부가 언제 가장 불편한지.</p>
+              <p class="cr-step-body">아누아 사이트, PDRN 제품 정보, 경쟁사 광고를 <strong>NotebookLM에 넣고</strong> 패턴을 읽었다. 전부 인플루언서 → 성분 → 제품 구조로 흘러가고 있었다. 여기서 판단했다. <strong>공감이 먼저다.</strong></p>
             </div>
             <div class="cr-step">
               <p class="cr-step-num">02 / 인사이트 도출</p>
-              <p class="cr-step-body">자료만으로 부족했다. 주변에 직접 물어봤다. <strong>더위, 에어컨, 건조함.</strong> 그 순간이 광고의 시작이었다.</p>
+              <p class="cr-step-body">자료 밖으로 나가 주변에 직접 물었다. 여름에 피부가 언제 가장 불편한지. <strong>더위, 에어컨, 건조함.</strong> 그 순간이 이번 광고의 진짜 시작이었다.</p>
             </div>
             <div class="cr-step">
-              <p class="cr-step-num">03 / 카피 → 영상</p>
-              <p class="cr-step-body">피부 내부를 <strong>귀여운 세포 캐릭터로 시각화.</strong> 카피 확정 후 13컷 스토리보드 설계, AI 영상 40초 혼자 완성.</p>
+              <p class="cr-step-num">03 / 크리에이티브 → 영상</p>
+              <p class="cr-step-body">피부 내부를 <strong>귀여운 세포 캐릭터</strong>로 시각화해 공감과 마케팅을 동시에 풀었다. 카피 확정 후 13컷 스토리보드 설계, <strong>40초 영상 편집 및 생성.</strong></p>
             </div>
           </div>
-        </div>
-        <div class="cr-block cr-retrospect">
-          <p class="cr-label">Lesson & Learned</p>
-          <p class="cr-body">AI 영상 특성상 영문 텍스트 오타를 완전히 잡지 못했다. 다음엔 후반 QC 단계를 따로 둘 것. 세포 세계관이 브랜드와 더 긴밀하게 연결됐다면 완성도가 더 높았을 것 같다.</p>
         </div>
       </div>
       <div class="case-row-right">
         <img src="anua_storyboard.png" alt="ANUA 스토리보드" style="width:100%; height:100%; display:block; object-fit:contain; background:#111;">
+      </div>
+    </div>
+
+    <!-- WHAT -->
+    <div class="case-row" data-reveal="3">
+      <div class="cr-category-label">WHAT</div>
+      <div class="case-row-left">
+        <div class="cr-block cr-copy">
+          <p class="cr-label">Key Copy</p>
+          <p class="cr-copy-main">여름 첫 수분은<br><em>아누아 PDRN 미스트</em></p>
+          <p class="cr-copy-sub">수분을 채우고, 진정까지 한 번에.</p>
+        </div>
+        <div class="cr-block cr-retrospect">
+          <p class="cr-label">무엇을 배웠나</p>
+          <p class="cr-body">AI 영상 특성상 영문 텍스트 오타를 완전히 잡지 못했다. 다음엔 후반 QC 단계를 별도로 마련해둘 생각이다. 세포 세계관이 브랜드와 더 긴밀하게 연결됐다면 완성도가 더 높아졌을 것 같다.</p>
+        </div>
+      </div>
+      <div class="case-row-right" style="display:flex; flex-direction:column; gap:2px;">
+        <div class="frame f-anua-6" style="flex:1;">
+          <img src="anua_frame6.png" alt="ANUA 엔딩 씬">
+          <p class="frame-scene">S12 / 엔딩</p>
+          <p class="frame-copy">여름 첫 수분은, 아누아</p>
+        </div>
+        <div class="frame" style="flex:1; background:#111;">
+          <img src="anua_typo_frame.png" alt="ANUA 영문 텍스트 오타 씬" style="object-fit: contain;">
+          <p class="frame-scene">AI 생성 오타</p>
+          <p class="frame-copy">영문 텍스트 미수정</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1383,7 +1541,7 @@ footer {
     <div class="case-banner case-banner-toss">
       <div class="case-banner-index">02</div>
       <p class="case-banner-tag">Case 02 · 자작 광고 기획 · 캠페인 전략 · 2025</p>
-      <h2 class="case-banner-title">"토스가 뭐가<br>어려워"</h2>
+      <h2 class="case-banner-title">"토스가 뭐가 어려워"</h2>
       <p class="case-banner-sub">브랜드 현황 분석 · 타겟 재설정 · 크리에이티브 콘셉트 · 카피 · KPI까지 단독 설계한 자작 기획안</p>
       <div class="case-banner-tags">
         <span class="case-tag">30s Shortform</span>
@@ -1392,17 +1550,13 @@ footer {
       </div>
     </div>
 
-    <!-- ROW 1: WHY + 키카피 | 대표 컷 -->
+    <!-- WHY -->
     <div class="case-row" data-reveal="1">
+      <div class="cr-category-label">WHY</div>
       <div class="case-row-left">
         <div class="cr-block">
-          <p class="cr-label">진행 배경</p>
-          <p class="cr-body">부모님 세대가 토스를 안 쓴다. 데이터를 보니 <strong>20대 가입율 94.5%, 50대 이상 24%.</strong> 문제는 제품이 아니라 "어렵다"는 인식이었다. 광고 하나로 그 인식을 바꿀 수 있을지 직접 설계해봤다.</p>
-        </div>
-        <div class="cr-block cr-copy">
-          <p class="cr-label">Key Copy</p>
-          <p class="cr-copy-main">어렵지 않아요.<br><em>토스니까요.</em></p>
-          <p class="cr-copy-sub">"토스가 뭐가 어려워, 다 하는 거지 뭐" — 이것도 토스.<br>부모님께 하던 말 한마디가 카피가 됐다.</p>
+          <p class="cr-label">왜 이 브랜드인가</p>
+          <p class="cr-body">부모님이 토스를 안 쓰는 걸 보면서 왜 안 쓰실까 직접 물었다. 데이터를 뽑아보니 <strong>50대 이상 가입율이 겨우 24%</strong>였고, 문제는 제품이 아니라 인식이라는 걸 알게 됐다. <strong>내가 광고 하나로 그 인식을 바꿔보기로 마음먹었다.</strong></p>
         </div>
       </div>
       <div class="case-row-right">
@@ -1414,33 +1568,71 @@ footer {
       </div>
     </div>
 
-    <!-- ROW 2: PROCESS | 스토리보드 -->
+    <!-- HOW -->
     <div class="case-row" data-reveal="2">
+      <div class="cr-category-label">HOW</div>
       <div class="case-row-left">
         <div class="cr-block">
-          <p class="cr-label">담당 업무 및 진행 사항</p>
+          <p class="cr-label">어떻게 풀었나</p>
           <div class="cr-process">
             <div class="cr-step">
-              <p class="cr-step-num">01 / 관찰</p>
-              <p class="cr-step-body">일상의 불편함을 광고로 풀고 싶다는 게 출발점이었다. 부모님이 토스를 안 쓰는 걸 보면서 직접 설계해보기로 했다.</p>
+              <p class="cr-step-num">01 / 브랜드 분석</p>
+              <p class="cr-step-body">토스 브랜드 자료와 세대별 이용 현황을 AI로 분석했다. 가입율 격차에서 문제가 드러났다. 제품이 어려운 게 아니라, <strong>"어렵다"는 인식</strong>이 벽이었다.</p>
+              <div class="data-chart" data-chart="1">
+                <p class="data-chart-title">토스 세대별 가입율</p>
+                <div class="data-bar-row">
+                  <span class="data-bar-label">20대</span>
+                  <span class="data-bar-track"><span class="data-bar-fill c-blue" data-tw="94.5%"></span></span>
+                  <span class="data-bar-value">94.5%</span>
+                </div>
+                <div class="data-bar-row">
+                  <span class="data-bar-label">50대+</span>
+                  <span class="data-bar-track"><span class="data-bar-fill c-red" data-tw="24%"></span></span>
+                  <span class="data-bar-value">24%</span>
+                </div>
+              </div>
             </div>
             <div class="cr-step">
-              <p class="cr-step-num">02 / 분석</p>
-              <p class="cr-step-body">AI로 토스 브랜드 자료를 분석해 데이터를 뽑았다. <strong>20대 94.5%, 50대 이상 24%.</strong> 문제는 인식이었다. KPI까지 단독 설계했다.</p>
+              <p class="cr-step-num">02 / 전략 도출</p>
+              <p class="cr-step-body">"어렵다"는 인식을 정면으로 반박하기로 했다. 타겟이 어렵다고 느끼는 지점을 <strong>역으로 치는 방식.</strong> 할머니가 배구 토스를 완벽하게 받아치는 반전으로 콘셉트를 잡았다.</p>
             </div>
             <div class="cr-step">
               <p class="cr-step-num">03 / 카피 도출</p>
-              <p class="cr-step-body">부모님께 하던 말이 카피가 됐다. <strong>"토스가 뭐가 어려워."</strong> 타겟이 어렵다고 느끼는 지점을 역으로 치는 방식. 실제로 지금 부모님은 토스를 쓰신다.</p>
+              <p class="cr-step-body">부모님께 하던 말이 그대로 카피가 됐다. <strong>"토스가 뭐가 어려워."</strong> 카피는 멀리서 찾은 게 아니었다. 실제로 지금 부모님은 토스를 쓰신다.</p>
             </div>
           </div>
-        </div>
-        <div class="cr-block cr-retrospect">
-          <p class="cr-label">Lesson & Learned</p>
-          <p class="cr-body">실제 영상 제작까지 못 갔다. 스토리보드로 기획력을 증명하는 데 집중했지만, 영상이 있었다면 설득력이 달랐을 것. 다음 기회엔 반드시 영상까지 완성할 것이다.</p>
         </div>
       </div>
       <div class="case-row-right">
         <img src="toss_storyboard.png" alt="TOSS 스토리보드" style="width:100%; height:100%; display:block; object-fit:contain; background:#111;">
+      </div>
+    </div>
+
+    <!-- WHAT -->
+    <div class="case-row" data-reveal="3">
+      <div class="cr-category-label">WHAT</div>
+      <div class="case-row-left">
+        <div class="cr-block cr-copy">
+          <p class="cr-label">Key Copy</p>
+          <p class="cr-copy-main">어렵지 않아요<br><em>토스니까요</em></p>
+          <p class="cr-copy-sub">"토스가 뭐가 어려워, 다 하는 거지 뭐" — 이것도 토스.</p>
+        </div>
+        <div class="cr-block cr-retrospect">
+          <p class="cr-label">무엇을 배웠나</p>
+          <p class="cr-body">실제 영상 제작까지 못 갔다. 스토리보드로 기획력을 증명하는 데 집중했지만, 영상이 있었다면 설득력이 확실히 달랐을 것이다. 다음 기회엔 반드시 영상까지 완성해 보여줄 생각이다.</p>
+        </div>
+      </div>
+      <div class="case-row-right" style="display:flex; flex-direction:column; gap:2px;">
+        <div class="frame f-toss-4" style="flex:1;">
+          <img src="toss_frame4.png" alt="TOSS 씬4">
+          <p class="frame-scene">S4 / 앱 오픈</p>
+          <p class="frame-copy">이것도 토스</p>
+        </div>
+        <div class="frame f-toss-6" style="flex:1;">
+          <img src="toss_frame6.png" alt="TOSS 씬6">
+          <p class="frame-scene">S6 / 엔딩</p>
+          <p class="frame-copy">어렵지 않아요, 토스니까요</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1461,50 +1653,99 @@ footer {
       </div>
     </div>
 
-    <!-- ROW 1: WHY + 키카피 | 대표 컷 -->
+    <!-- WHY -->
     <div class="case-row" data-reveal="1">
+      <div class="cr-category-label">WHY</div>
       <div class="case-row-left">
         <div class="cr-block">
-          <p class="cr-label">진행 배경</p>
-          <p class="cr-body">GAMFF 공모전에서 산동탁주양조장을 발견했다. <strong>100년 3대 서사.</strong> 1924년 창업 당시 사진이 없었다. 오히려 기회였다. 촬영 불가능한 백 년 전을 AI로 처음 시각화할 수 있었다.</p>
-        </div>
-        <div class="cr-block cr-copy">
-          <p class="cr-label">Key Copy</p>
-          <p class="cr-copy-main">계절이 지나도,<br>시절이 지나도<br><em>변하지 않는 손맛.</em></p>
-          <p class="cr-copy-sub">1924년 새벽. 이 향으로 시작됐습니다.<br>백 년이 지났는데, 아직 같은 향입니다.</p>
+          <p class="cr-label">왜 이 브랜드인가</p>
+          <p class="cr-body">조장으로 팀과 공모전을 탐색하다 GAMFF를 발견했다. 지역기업 AI 광고 부문에서 산동탁주양조장을 찾아보니 <strong>100년 3대 서사</strong>가 있었다. 1924년은 촬영으로 찍을 수 없는 시절이다. 그게 문제가 아니라 <strong>AI만 할 수 있는 이유</strong>였다. 이 이야기를 AI로 꼭 살려보고 싶었다.</p>
         </div>
       </div>
       <div class="case-row-right">
-        <div class="frame frame-hero f-gamff-6">
-          <img src="gamff_frame6.png" alt="GAMFF 엔딩 씬" style="object-fit: contain; object-position: center center; background: #0a0a0a;">
-          <p class="frame-scene">풀컬러 / 로고 아웃</p>
-          <p class="frame-copy">변하지 않는 손맛,<br>구미를 빚다.</p>
+        <div class="frame frame-hero f-gamff-1">
+          <img src="gamff_frame1.png" alt="GAMFF 1924년 새벽 씬" style="object-fit: contain; object-position: center center; background: #0a0a0a;">
+          <p class="frame-scene">흑백 / 1924년 새벽</p>
+          <p class="frame-copy">이 향으로<br>시작됐습니다</p>
         </div>
       </div>
     </div>
 
-    <!-- ROW 2: PROCESS | 스토리보드 -->
+    <!-- HOW -->
     <div class="case-row" data-reveal="2">
+      <div class="cr-category-label">HOW</div>
       <div class="case-row-left">
         <div class="cr-block">
-          <p class="cr-label">담당 업무 및 진행 사항</p>
+          <p class="cr-label">어떻게 풀었나</p>
           <div class="cr-process">
             <div class="cr-step">
-              <p class="cr-step-num">01 / 기획</p>
-              <p class="cr-step-body">조장으로 공모전 탐색 → GAMFF 발견 → 산동탁주 선정. 100년 서사를 <strong>과거→현재</strong> 시간 흐름으로 구조화했다.</p>
+              <p class="cr-step-num">01 / 자료가 없어서 직접 찾았다</p>
+              <p class="cr-step-body">산동탁주는 공식 자료가 거의 없었다. AI만으로는 한계가 명확했다. TBC 다큐 영상을 직접 발굴해 <strong>80프레임을 손으로 뜯어</strong> 분석하고, 대표 실제 발화 6개를 추출했다. 데이터가 없으면 직접 만들어내면 될 일이었다.</p>
+              <div class="stat-row">
+                <div class="stat-card">
+                  <p class="stat-num">80</p>
+                  <p class="stat-desc">직접 분석<br>프레임</p>
+                </div>
+                <div class="stat-card">
+                  <p class="stat-num">6</p>
+                  <p class="stat-desc">추출한<br>실제 발화</p>
+                </div>
+                <div class="stat-card">
+                  <p class="stat-num">58</p>
+                  <p class="stat-desc">분석한<br>수상작</p>
+                </div>
+              </div>
             </div>
             <div class="cr-step">
-              <p class="cr-step-num">02 / 연출</p>
-              <p class="cr-step-body"><strong>흑백→세피아→풀컬러</strong> 색감 변화로 시대 전환을 표현. AI 기술력이 연출의 핵심이 되도록 퀄리티에 집중했다.</p>
+              <p class="cr-step-num">02 / 채점표부터 읽었다</p>
+              <p class="cr-step-body">감으로 시작하지 않았다. 심사 배점을 먼저 분석했다. <strong>4개 항목이 전부 동일 배점(각 25%).</strong> 수상작 58편의 패턴도 함께 도출했다. 경북 소재라 <strong>주제 적합성 25%는 자동 확보.</strong> 이 배점을 기준으로 기획 전체를 역산해나갔다.</p>
+              <div class="data-chart" data-chart="1">
+                <p class="data-chart-title">GAMFF 심사 배점 분석</p>
+                <div class="data-bar-row">
+                  <span class="data-bar-label">창의·혁신</span>
+                  <span class="data-bar-track"><span class="data-bar-fill c-red" data-tw="25%"></span></span>
+                  <span class="data-bar-value">25%</span>
+                </div>
+                <div class="data-bar-row">
+                  <span class="data-bar-label">기술 완성도</span>
+                  <span class="data-bar-track"><span class="data-bar-fill c-blue" data-tw="25%"></span></span>
+                  <span class="data-bar-value">25%</span>
+                </div>
+                <div class="data-bar-row">
+                  <span class="data-bar-label">주제 적합성</span>
+                  <span class="data-bar-track"><span class="data-bar-fill c-green" data-tw="25%"></span></span>
+                  <span class="data-bar-value">25%</span>
+                </div>
+                <div class="data-bar-row">
+                  <span class="data-bar-label">감동·몰입</span>
+                  <span class="data-bar-track"><span class="data-bar-fill c-amber" data-tw="25%"></span></span>
+                  <span class="data-bar-value">25%</span>
+                </div>
+              </div>
             </div>
             <div class="cr-step">
-              <p class="cr-step-num">03 / 판단</p>
-              <p class="cr-step-body">AI 생성 인물 초상권 이슈를 직접 발견해 전부 교체. <strong>기획·카피·스토리보드·편집</strong> 전 과정 단독 전담.</p>
+              <p class="cr-step-num">03 / A/B/C안 설계 후 하이브리드 선택</p>
+              <p class="cr-step-body">콘셉트 3안을 만들었다. <strong>A안 시간서사 · B안 발효비주얼 · C안 구미사람들.</strong> 창의성과 감동을 동시에 잡기 위해 앞 30초는 발효 비주얼로, 뒤 90초는 3대 서사로 엮은 <strong>하이브리드</strong>로 결정했다. 기획부터 카피, 스토리보드, 편집까지 전 과정을 혼자서 전담했다.</p>
             </div>
           </div>
         </div>
+      </div>
+      <div class="case-row-right">
+        <img src="storyboard_gamff.png" alt="GAMFF 스토리보드" style="width:100%; height:100%; display:block; object-fit:contain; background:#111;">
+      </div>
+    </div>
+
+    <!-- WHAT -->
+    <div class="case-row" data-reveal="3">
+      <div class="cr-category-label">WHAT</div>
+      <div class="case-row-left">
+        <div class="cr-block cr-copy">
+          <p class="cr-label">Key Copy</p>
+          <p class="cr-copy-main">계절이 지나도<br>시절이 지나도<br><em>변하지 않는 손맛</em></p>
+          <p class="cr-copy-sub">1924년 새벽. 이 향으로 시작됐습니다.<br>백 년이 지났는데, 아직 같은 향입니다.</p>
+        </div>
         <div class="cr-block cr-retrospect">
-          <p class="cr-label">Lesson & Learned</p>
+          <p class="cr-label">무엇을 배웠나</p>
           <p class="cr-body">공모전 결과는 아직 모른다. 촬영 불가능한 100년 전을 AI로 시각화한 것 자체가 목표였다. 색감 전환이 더 자연스러웠다면 시간의 흐름이 더 강하게 전달됐을 것 같다.</p>
         </div>
         <div class="cr-block" style="padding-top:20px;">
@@ -1514,8 +1755,17 @@ footer {
           </a>
         </div>
       </div>
-      <div class="case-row-right">
-        <img src="storyboard_gamff.png" alt="GAMFF 스토리보드" style="width:100%; height:100%; display:block; object-fit:contain; background:#111;">
+      <div class="case-row-right" style="display:flex; flex-direction:column; gap:2px;">
+        <div class="frame f-gamff-5" style="flex:1;">
+          <img src="gamff_frame5.png" alt="GAMFF 씬5">
+          <p class="frame-scene">엔딩 카드 · 수미상결</p>
+          <p class="frame-copy">계절이 지나도,<br>시절이 지나도</p>
+        </div>
+        <div class="frame f-gamff-6" style="flex:1;">
+          <img src="gamff_frame6.png" alt="GAMFF 엔딩 씬">
+          <p class="frame-scene">풀컬러 / 로고 아웃</p>
+          <p class="frame-copy">변하지 않는 손맛<br>구미를 빚다</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1528,11 +1778,11 @@ footer {
 
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; margin-bottom:64px;">
     <div>
-      <h2 style="font-size:clamp(28px,3.5vw,44px); font-weight:900; letter-spacing:-0.025em; line-height:1.2; color:var(--cream);">기획이 영상이 된다.<br><span style="color:var(--red);">카피가 씬이 된다.</span></h2>
+      <h2 style="font-size:clamp(28px,3.5vw,44px); font-weight:900; letter-spacing:-0.025em; line-height:1.2; color:var(--cream);">감이 아니라<br><span style="color:var(--red);">분석에서 시작한다</span></h2>
     </div>
     <div>
-      <p style="font-size:14px; line-height:2.0; color:var(--cream-dim);">클라이언트 니즈를 듣고, 그 안에서 스토리를 기획하고, A/B/C안을 제안한다.<br>
-      <strong style="color:var(--cream);">카피와 콘티가 확정된 뒤에야 AI를 켠다.</strong> 내가 기획한 것이 영상으로 완성되는 순간이 목표다.</p>
+      <p style="font-size:14px; line-height:2.0; color:var(--cream-dim);"><strong style="color:var(--cream);">데이터가 명확해야 광고주의 니즈가 정확히 판단된다.</strong> 광고주·트렌드·경쟁사·포지셔닝을 AI로 분석하고, 약점을 도출한다. 레퍼런스는 집요하게 찾는다. 그 안에서 아이디어를 발굴한다.<br>
+      아이디어는 그 다음이다. <strong style="color:var(--cream);">카피와 콘티가 확정되기 전에는 영상 생성부터 절대 하지 않는다.</strong></p>
     </div>
   </div>
 
@@ -1879,17 +2129,44 @@ function type() {
 
 setTimeout(type, 600);
 
+// 막대 채우기 헬퍼 (스크롤 진입 시 애니메이션)
+function fillBars(scope) {
+  scope.querySelectorAll('.data-bar-fill').forEach(bar => {
+    if (!bar.dataset.filled) {
+      bar.style.setProperty('--tw', bar.dataset.tw);
+      bar.classList.add('animated');
+      bar.dataset.filled = '1';
+    }
+  });
+}
+
 // C: 스크롤 reveal
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('revealed');
+      fillBars(entry.target);
       revealObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.12 });
 
 document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+// 데이터 막대 애니메이션 (독립 감지)
+const chartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      fillBars(entry.target);
+      chartObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+
+document.querySelectorAll('.data-chart').forEach(el => chartObserver.observe(el));
+
+// 안전장치: 3초 후에도 안 채워진 막대는 강제로 채움
+setTimeout(() => document.querySelectorAll('.data-chart').forEach(fillBars), 3000);
 </script>
 </body>
 </html>
